@@ -1,5 +1,5 @@
 import pandas as pd
-from analyzer import analyze_data
+from analyzer import analyze_data, clean_data
 
 data = {
     "Name": ["Asha", "Rahul", "Priya", "Asha", "John", "Rahul"],
@@ -27,3 +27,38 @@ for col, per in report['missing_percentage'].items():
     print(f"  {col}: {per:.2f}%")
 
 print(f"\n Data Types: {report['data_types']}")
+
+# Test 1: Remove duplicates + Median + Mode
+cleaned_df = clean_data(
+    df,
+    duplicate_option="Remove",
+    numeric_strategy="Median",
+    categorical_strategy="Mode"
+)
+
+print("\nTest 1: Median + Mode")
+print(cleaned_df)
+
+
+# Test 2: Keep duplicates + Mean + Unknown
+cleaned_df = clean_data(
+    df,
+    duplicate_option="Keep",
+    numeric_strategy="Mean",
+    categorical_strategy="Unknown"
+)
+
+print("\nTest 2: Mean + Unknown + Keep Duplicates")
+print(cleaned_df)
+
+
+# Test 3: Remove duplicates + Zero + Unknown
+cleaned_df = clean_data(
+    df,
+    duplicate_option="Remove",
+    numeric_strategy="Zero",
+    categorical_strategy="Unknown"
+)
+
+print("\nTest 3: Zero + Unknown")
+print(cleaned_df)
